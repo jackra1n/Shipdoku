@@ -10,7 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Shipdoku.Views
+namespace ShipdokuGUI.Views
 {
     /// <summary>
     /// Interaction logic for Shell.xaml

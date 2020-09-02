@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using Prism.Ioc;
 using Prism.Unity;
-using Shipdoku.Views;
+using ShipdokuGUI.Views;
 
-namespace Shipdoku
+namespace ShipdokuGUI
 {
     /// <summary>
     /// Interaction logic for App.xaml
