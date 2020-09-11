@@ -1,8 +1,8 @@
 ﻿<prism:PrismApplication 
-         x:Class="ShipdokuGUI.App"
+         x:Class="Shipdoku.App"
          xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-         xmlns:local="clr-namespace:ShipdokuGUI"
+         xmlns:local="clr-namespace:Shipdoku"
          xmlns:prism="http://prismlibrary.com/">
     <Application.Resources>
          
