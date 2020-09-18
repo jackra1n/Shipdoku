@@ -1,8 +1,8 @@
 ﻿using System;
-using ShipdokuGUI.ViewModels;
+using Shipdoku.ViewModels;
 using Xunit;
 
-namespace ShipdokuGUI.Tests
+namespace Shipdoku.Tests
 {
     public class ShellViewModelTest
     {

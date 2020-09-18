@@ -1,4 +1,4 @@
-﻿namespace ShipdokuGUI.ViewModels
+﻿namespace Shipdoku.ViewModels
 {
     public class ShellViewModel
     {
