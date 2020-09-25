@@ -1,8 +1,9 @@
-﻿namespace Shipdoku.ViewModels
-{
-    public class ShellViewModel
-    {
-        public string Title { get; set; } = "Shipdoku";
+﻿using Prism.Mvvm;
 
+namespace Shipdoku.ViewModels
+{
+    public class ShellViewModel : BindableBase
+    {
+        public string Title { get; } = "Shipdoku";
     }
 }
