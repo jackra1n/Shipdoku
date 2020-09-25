@@ -2,7 +2,7 @@
 using Shipdoku.ViewModels;
 using Xunit;
 
-namespace Shipdoku.Tests
+namespace Shipdoku.Tests.ViewModelTests
 {
     public class ShellViewModelTest
     {
