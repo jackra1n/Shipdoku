@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using Prism.Ioc;
 using Prism.Unity;
+using Shipdoku.Interfaces;
+using Shipdoku.Services;
 using Shipdoku.Views;
 
 namespace Shipdoku
@@ -18,8 +20,7 @@ namespace Shipdoku
     {
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            // ToDo: register needed services here
-            // containerRegistry.Register<ICustomerStore, DbCustomerStore>();
+            containerRegistry.Register<IShipdokuGenerator, ShipdokuGenerator>();
         }
 
         protected override Window CreateShell()
