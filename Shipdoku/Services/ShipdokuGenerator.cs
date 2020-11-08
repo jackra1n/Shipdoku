@@ -56,65 +56,67 @@ namespace Shipdoku.Services
             // ToDo: Checken, dass Solved und nicht Solved nicht die gleiche Referenz haben
             playingfield.SolvedShipdokuField = shipdokuField;
 
-            playingfield.ShipdokuField = DissolveFiled(shipdokuField);
+            playingfield.ShipdokuField = DissolveField(shipdokuField);
 
             return playingfield;
         }
 
-        private EShipdokuField[,] DissolveFiled(EShipdokuField[,] shipdokuField)
+        private EShipdokuField[,] DissolveField(EShipdokuField[,] shipdokuField)
         {
-            int count = 0;
-            foreach (var singleShipdokuField in shipdokuField)
+            EShipdokuField[,] dissolvedField = new EShipdokuField[PlayingFieldHeight,PlayingFieldWidht];
+            for (int j = 0; j < PlayingFieldHeight; j++)
             {
-                count++;
-                if (_random.Next(6) != 1)
-                    singleShipdokuField = EShipdokuField.Empty;
+                for (int i = 0; i < PlayingFieldWidht; i++)
+                {
+                    if (_random.Next(9) == 1)
+                        dissolvedField[j, i] = shipdokuField[j, i];
+                }
             }
 
-            return shipdokuField;
+            return dissolvedField;
         }
 
-        private int[] GetShipCountsForRows(EShipdokuField[,] field)
+        private static int[] GetShipCountsForRows(EShipdokuField[,] field)
         {
             int[] counts = new int[PlayingFieldHeight];
 
-            for (int j = 0; j < PlayingFieldHeight; j++)
+            for (int row = 0; row < PlayingFieldHeight; row++)
             {
                 int count = 0;
 
-                for (int i = 0; i < PlayingFieldWidht; i++)
+                for (int column = 0; column < PlayingFieldWidht; column++)
                 {
-                    if (field[i, j] != EShipdokuField.Water)
+                    if (field[column, row] != EShipdokuField.Water)
                         count++;
                 }
 
-                counts[j] = count;
+                counts[row] = count;
             }
             
             return counts;
         }
 
-        private int[] GetShipCountsForColumns(EShipdokuField[,] field)
+        private static int[] GetShipCountsForColumns(EShipdokuField[,] field)
         {
             int[] counts = new int[PlayingFieldWidht];
 
-            for (int j = 0; j < PlayingFieldWidht; j++)
+            for (int column = 0; column < PlayingFieldWidht; column++)
             {
                 int count = 0;
 
-                for (int i = 0; i < PlayingFieldHeight; i++)
+                for (int row = 0; row < PlayingFieldHeight; row++)
                 {
-                    if (field[i, j] != EShipdokuField.Water)
+                    if (field[column, row] != EShipdokuField.Water)
                         count++;
                 }
 
-                counts[j] = count;
+                counts[column] = count;
             }
 
             return counts;
         }
 
-        private void FillInShip(EShipdokuField[,] field, int xCoordinate, int yCoordinate, int length, EShipStartDirection direction)
+        private static void FillInShip(EShipdokuField[,] field, int xCoordinate, int yCoordinate, int length, EShipStartDirection direction)
         {
             for (int i = 0; i < length; i++)
             {
@@ -139,7 +141,7 @@ namespace Shipdoku.Services
             }
         }
 
-        private bool CheckSurroundingsOfShip(EShipdokuField[,] field, int xCoordinate, int yCoordinate, int length, EShipStartDirection direction)
+        private static bool CheckSurroundingsOfShip(EShipdokuField[,] field, int xCoordinate, int yCoordinate, int length, EShipStartDirection direction)
         {
             for (int i = 0; i < length; i++)
             {
@@ -169,7 +171,7 @@ namespace Shipdoku.Services
             return true;
         }
         
-        private bool CheckSurroundingsOfField(EShipdokuField[,] field, in int xCoordinate, in int yCoordinate)
+        private static bool CheckSurroundingsOfField(EShipdokuField[,] field, in int xCoordinate, in int yCoordinate)
         {
             if (xCoordinate > 7 || xCoordinate < 0
                 || yCoordinate > 7 || yCoordinate < 0
@@ -185,7 +187,7 @@ namespace Shipdoku.Services
             return true;
         }
 
-        private void ReplaceEmptyFieldWithWater(EShipdokuField[,] field)
+        private static void ReplaceEmptyFieldWithWater(EShipdokuField[,] field)
         {
             for (int i = 0; i < PlayingFieldWidht; i++)
             {
