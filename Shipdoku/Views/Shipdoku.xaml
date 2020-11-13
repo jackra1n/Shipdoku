@@ -12,7 +12,8 @@
     <UserControl.Resources>
         <converters:ShipdokuFieldToImageConverter x:Key="ShipdokuFieldToImageConverter"/>
     </UserControl.Resources>
-    <Grid>
-            
-    </Grid>
+    <StackPanel>
+        <Button Command="{Binding ExportCommand}">Ka</Button>
+        <Image Source="/Images/check.png"></Image>
+    </StackPanel>
 </UserControl>
