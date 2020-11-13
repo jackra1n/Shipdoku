@@ -9,9 +9,5 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Label Content="{Binding Title}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0, 60" FontSize="24"/>
-        <Label Content="THIS IS start menu YEEEES" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0, 60" FontSize="24"/>
-
-        <Button Content="Rätsel generieren" Height="30" Width="100"/>
     </Grid>
 </UserControl>

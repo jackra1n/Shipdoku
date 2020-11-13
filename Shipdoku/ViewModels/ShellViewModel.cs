@@ -21,7 +21,6 @@ namespace Shipdoku.ViewModels
         public ShellViewModel(IRegionManager regionManager)
         {
             _regionManager = regionManager;
-
             NavigateCommand = new DelegateCommand<string>(Navigate);
         }
         private void Navigate(string navigatePath)

@@ -13,6 +13,8 @@
         <converters:ShipdokuFieldToImageConverter x:Key="ShipdokuFieldToImageConverter"/>
     </UserControl.Resources>
     <Grid>
-            
+        <Label Content="Shipdoku" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="100,10,0,0" FontSize="32"/>
+        <Button Height="40" Width="40" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="40, 80"></Button>
+        <Button Height="40" Width="40" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="100, 80"></Button>
     </Grid>
 </UserControl>

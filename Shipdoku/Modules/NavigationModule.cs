@@ -1,14 +1,15 @@
 ﻿using Prism.Ioc;
 using Prism.Modularity;
+using Prism.Regions;
+using Shipdoku.Views;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using Shipdoku.ViewModels;
 
 namespace Shipdoku.Modules
 {
     public class NavigationModule : IModule
     {
+        IRegionManager _regionManager;
+
         public void OnInitialized(IContainerProvider containerProvider)
         {
 
@@ -16,7 +17,12 @@ namespace Shipdoku.Modules
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterForNavigation<StartMenuViewModel>();
+            containerRegistry.RegisterForNavigation<StartMenu>();
+            containerRegistry.RegisterForNavigation<Shipdoku.Views.Shipdoku>();
+        }
+        public void Initialize()
+        {
+            _regionManager.RequestNavigate("ContentRegion", new Uri("Shipdoku", UriKind.Relative));
         }
     }
 }

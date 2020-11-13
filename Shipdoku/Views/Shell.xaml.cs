@@ -21,6 +21,7 @@ namespace Shipdoku.Views
         public Shell()
         {
             InitializeComponent();
+
         }
     }
 }
