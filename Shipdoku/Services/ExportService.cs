@@ -40,7 +40,7 @@ namespace Shipdoku.Services
         private string AskForFilePath()
         {
             var fileDialog = new SaveFileDialog();
-            fileDialog.Filter = "JPeg Image|*.jpg|Bitmap Image|*.bmp|Gif Image|*.gif";
+            fileDialog.Filter = "JPeg Image|*.jpg|All files (*.*)|*.*";
             fileDialog.Title = "Save an Image File";
             fileDialog.AddExtension = true;
 
