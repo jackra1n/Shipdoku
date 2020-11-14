@@ -41,5 +41,10 @@ namespace Shipdoku.Models
             get => _shipdokuField;
             set => SetProperty(ref _shipdokuField, value);
         }
+
+        /// <summary>
+        /// Property mit einer möglichen Lösung des Rätels
+        /// </summary>
+        public EShipdokuField[,] SolvedShipdokuField { get; set; }
     }
 }

@@ -13,6 +13,8 @@ namespace Shipdoku.ViewModels
         public ShipdokuViewModel(IShipdokuGenerator shipdokuGenerator)
         {
             _shipdokuGenerator = shipdokuGenerator;
+
+            Playingfield = _shipdokuGenerator.GenerateShipdokuModel();
         }
 
         public ShipdokuModel Playingfield { get; set; }
