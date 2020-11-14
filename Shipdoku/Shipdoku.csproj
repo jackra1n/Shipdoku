@@ -52,7 +52,9 @@
     <Content Include="Images\shipMiddle.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Images\shipRight.png" />
+    <Content Include="Images\shipRight.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\shipSingle.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
