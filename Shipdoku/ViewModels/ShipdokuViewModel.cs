@@ -18,8 +18,11 @@ namespace Shipdoku.ViewModels
         public ShipdokuViewModel(IShipdokuGenerator shipdokuGenerator, IExportService exportService)
         {
             _shipdokuGenerator = shipdokuGenerator;
+            _exportService = exportService;
 
             Playingfield = _shipdokuGenerator.GenerateShipdokuModel();
+
+            ExportCommand = new DelegateCommand(Export);
         }
 
         public DelegateCommand ExportCommand { get; set; }
@@ -28,10 +31,7 @@ namespace Shipdoku.ViewModels
 
         private void Export()
         {
-            var parameter = new EShipdokuField[8, 8];
-            parameter[1, 1] = EShipdokuField.ShipDown;
-
-            _exportService.ExportPlayingFieldToPng(parameter);
+            _exportService.ExportPlayingFieldToPng(Playingfield);
         }
     }
 }
