@@ -18,9 +18,8 @@ namespace Shipdoku.ViewModels
         public ShipdokuViewModel(IShipdokuGenerator shipdokuGenerator, IExportService exportService)
         {
             _shipdokuGenerator = shipdokuGenerator;
-            _exportService = exportService;
 
-            ExportCommand = new DelegateCommand(Export);
+            Playingfield = _shipdokuGenerator.GenerateShipdokuModel();
         }
 
         public DelegateCommand ExportCommand { get; set; }
