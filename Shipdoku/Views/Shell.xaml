@@ -7,13 +7,8 @@
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
-        Title="{Binding Title}" Height="450" Width="600">
+        Title="{Binding Title}" Height="600" Width="800">
     <Grid>
-        <Label Content="{Binding Title}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0, 60" FontSize="24"/>
-        <Button Content="Rätsel generieren" Command="{Binding NavigateCommand}" CommandParameter="Shipdoku" Height="30" Width="100"/>
-        <Button Content="Eigenes Rätsel erstellen" Height="30" Width="140" VerticalAlignment="Top" Margin="0, 250, 0 ,0"/>
-        <!--<Button Command="{Binding NavigateCommand}" CommandParameter="StartMenu" Margin="5" Height="20" Width="100">Navigate to Start menu</Button>-->
-        <ContentControl prism:RegionManager.RegionName="ContentRegion" Margin="10,10,0,0"/>
-        
+        <ContentControl prism:RegionManager.RegionName="ContentRegion"/>
     </Grid>
 </Window>

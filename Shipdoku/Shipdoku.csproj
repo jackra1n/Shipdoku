@@ -8,6 +8,8 @@
 
   <ItemGroup>
     <None Remove="Images\shipIcon.ico" />
+    <None Remove="Images\shipIcon.png" />
+    <None Remove="Images\water.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,6 +20,8 @@
 
   <ItemGroup>
     <Resource Include="Images\shipIcon.ico" />
+    <Resource Include="Images\shipIcon.png" />
+    <Resource Include="Images\water.png" />
   </ItemGroup>
 
 </Project>

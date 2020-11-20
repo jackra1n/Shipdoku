@@ -7,7 +7,10 @@
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             Height="600" Width="800">
     <Grid>
+        <Label Content="{Binding Title}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0, 60" FontSize="44"/>
+        <Button Content="Rätsel generieren" Command="{Binding NavigateCommand}" CommandParameter="Shipdoku" VerticalAlignment="Center" Margin="0,-160,0,0" Height="40" Width="200" FontSize="24"/>
+        <Button Content="Eigenes Rätsel erstellen" Height="40" Width="260" VerticalAlignment="Center" Margin="0,40,0,0" FontSize="24"/>
     </Grid>
 </UserControl>
