@@ -23,7 +23,7 @@ namespace Shipdoku.ViewModels
         private void Navigate(string navigatePath)
         {
             if (navigatePath != null)
-                _regionManager.RequestNavigate("ContentRegion", navigatePath);
+                _regionManager.RequestNavigate("ContentRegion", navigatePath, new NavigationParameters());
         }
     }
 }
