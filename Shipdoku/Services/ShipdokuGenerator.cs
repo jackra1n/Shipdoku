@@ -19,6 +19,7 @@ namespace Shipdoku.Services
         public ShipdokuModel GenerateShipdokuModel()
         {
             var shipdokuField = new EShipdokuField[PlayingFieldWidht,PlayingFieldHeight];
+            ReplaceEmptyFieldsWithWater(shipdokuField);
             var playingfield = new ShipdokuModel();
 
             foreach (var shipLegth in _ships.OrderByDescending(l => l))
@@ -47,7 +48,6 @@ namespace Shipdoku.Services
                 FillInShip(shipdokuField, startX, startY, shipLegth, direction);
             }
 
-            ReplaceEmptyFieldWithWater(shipdokuField);
 
             playingfield.HorizontalCounts = GetShipCountsForRows(shipdokuField);
 
@@ -118,6 +118,7 @@ namespace Shipdoku.Services
 
         private static void FillInShip(EShipdokuField[,] field, int xCoordinate, int yCoordinate, int length, EShipStartDirection direction)
         {
+            // ToDo: anpassen
             for (int i = 0; i < length; i++)
             {
                 field[xCoordinate, yCoordinate] = EShipdokuField.ShipMiddle;
@@ -172,15 +173,15 @@ namespace Shipdoku.Services
         }
         
         private static bool CheckSurroundingsOfField(EShipdokuField[,] field, int xCoordinate, int yCoordinate)
-        {
+        { 
             if (xCoordinate > 7 || xCoordinate < 0
                 || yCoordinate > 7 || yCoordinate < 0
-                || field[xCoordinate, yCoordinate] == EShipdokuField.ShipMiddle // Feld checken
+                || field[xCoordinate, yCoordinate] != EShipdokuField.Water // Feld checken
                 || !CheckForDiagonalShips(field, xCoordinate, yCoordinate)
-                || (xCoordinate != 0 && field[xCoordinate - 1, yCoordinate] == EShipdokuField.ShipMiddle)
-                || (xCoordinate != PlayingFieldWidht - 1 && field[xCoordinate + 1, yCoordinate] == EShipdokuField.ShipMiddle)
-                || (yCoordinate != 0 && field[xCoordinate, yCoordinate - 1] == EShipdokuField.ShipMiddle)
-                || (yCoordinate != PlayingFieldHeight - 1 && field[xCoordinate, yCoordinate + 1] == EShipdokuField.ShipMiddle))
+                || (xCoordinate != 0 && field[xCoordinate - 1, yCoordinate] != EShipdokuField.Water)
+                || (xCoordinate != PlayingFieldWidht - 1 && field[xCoordinate + 1, yCoordinate] != EShipdokuField.Water)
+                || (yCoordinate != 0 && field[xCoordinate, yCoordinate - 1] != EShipdokuField.Water)
+                || (yCoordinate != PlayingFieldHeight - 1 && field[xCoordinate, yCoordinate + 1] != EShipdokuField.Water))
             {
                 return false;
             }
@@ -191,25 +192,25 @@ namespace Shipdoku.Services
         private static bool CheckForDiagonalShips(EShipdokuField[,] solvedShipdokuField, int xCoordinate, int yCoordinate)
         {
             if (xCoordinate != 0 && yCoordinate != 0 &&
-                solvedShipdokuField[xCoordinate - 1, yCoordinate - 1] != EShipdokuField.Water)
+                    solvedShipdokuField[xCoordinate - 1, yCoordinate - 1] != EShipdokuField.Water)
                 return false;
 
             if (xCoordinate != PlayingFieldWidht - 1 && yCoordinate != 0 &&
-                solvedShipdokuField[xCoordinate + 1, yCoordinate - 1] != EShipdokuField.Water)
+                    solvedShipdokuField[xCoordinate + 1, yCoordinate - 1] != EShipdokuField.Water)
                 return false;
 
             if (xCoordinate != PlayingFieldWidht - 1 && yCoordinate != PlayingFieldHeight - 1 &&
-                solvedShipdokuField[xCoordinate + 1, yCoordinate + 1] != EShipdokuField.Water)
+                    solvedShipdokuField[xCoordinate + 1, yCoordinate + 1] != EShipdokuField.Water)
                 return false;
 
             if (xCoordinate != 0 && yCoordinate != PlayingFieldHeight - 1 &&
-                solvedShipdokuField[xCoordinate - 1, yCoordinate + 1] != EShipdokuField.Water)
+                    solvedShipdokuField[xCoordinate - 1, yCoordinate + 1] != EShipdokuField.Water)
                 return false;
 
             return true;
         }
 
-        private static void ReplaceEmptyFieldWithWater(EShipdokuField[,] field)
+        private static void ReplaceEmptyFieldsWithWater(EShipdokuField[,] field)
         {
             for (int i = 0; i < PlayingFieldWidht; i++)
             {
