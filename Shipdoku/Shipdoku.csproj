@@ -7,16 +7,67 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\check.png" />
+    <None Remove="Images\export.png" />
+    <None Remove="Images\redo.png" />
+    <None Remove="Images\shipDown.png" />
     <None Remove="Images\shipIcon.ico" />
+    <None Remove="Images\shipIcon.png" />
+    <None Remove="Images\shipLeft.png" />
+    <None Remove="Images\shipMiddle.png" />
+    <None Remove="Images\shipRight.png" />
+    <None Remove="Images\shipSingle.png" />
+    <None Remove="Images\shipUp.png" />
+    <None Remove="Images\water.png" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Prism.Unity" Version="8.0.0.1850-pre" />
     <PackageReference Include="Prism.Wpf" Version="8.0.0.1850-pre" />
+    <PackageReference Include="System.Drawing.Common" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\shipIcon.ico" />
+    <Content Include="Images\check.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\export.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\redo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\shipDown.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\shipIcon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\shipIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\shipLeft.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\shipMiddle.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\shipRight.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\shipSingle.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\shipUp.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\water.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
 
 </Project>
