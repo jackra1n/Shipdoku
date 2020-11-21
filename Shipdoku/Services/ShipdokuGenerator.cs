@@ -171,11 +171,12 @@ namespace Shipdoku.Services
             return true;
         }
         
-        private static bool CheckSurroundingsOfField(EShipdokuField[,] field, in int xCoordinate, in int yCoordinate)
+        private static bool CheckSurroundingsOfField(EShipdokuField[,] field, int xCoordinate, int yCoordinate)
         {
             if (xCoordinate > 7 || xCoordinate < 0
                 || yCoordinate > 7 || yCoordinate < 0
                 || field[xCoordinate, yCoordinate] == EShipdokuField.ShipMiddle // Feld checken
+                || !CheckForDiagonalShips(field, xCoordinate, yCoordinate)
                 || (xCoordinate != 0 && field[xCoordinate - 1, yCoordinate] == EShipdokuField.ShipMiddle)
                 || (xCoordinate != PlayingFieldWidht - 1 && field[xCoordinate + 1, yCoordinate] == EShipdokuField.ShipMiddle)
                 || (yCoordinate != 0 && field[xCoordinate, yCoordinate - 1] == EShipdokuField.ShipMiddle)
@@ -183,6 +184,27 @@ namespace Shipdoku.Services
             {
                 return false;
             }
+
+            return true;
+        }
+
+        private static bool CheckForDiagonalShips(EShipdokuField[,] solvedShipdokuField, int xCoordinate, int yCoordinate)
+        {
+            if (xCoordinate != 0 && yCoordinate != 0 &&
+                solvedShipdokuField[xCoordinate - 1, yCoordinate - 1] != EShipdokuField.Water)
+                return false;
+
+            if (xCoordinate != PlayingFieldWidht - 1 && yCoordinate != 0 &&
+                solvedShipdokuField[xCoordinate + 1, yCoordinate - 1] != EShipdokuField.Water)
+                return false;
+
+            if (xCoordinate != PlayingFieldWidht - 1 && yCoordinate != PlayingFieldHeight - 1 &&
+                solvedShipdokuField[xCoordinate + 1, yCoordinate + 1] != EShipdokuField.Water)
+                return false;
+
+            if (xCoordinate != 0 && yCoordinate != PlayingFieldHeight - 1 &&
+                solvedShipdokuField[xCoordinate - 1, yCoordinate + 1] != EShipdokuField.Water)
+                return false;
 
             return true;
         }
