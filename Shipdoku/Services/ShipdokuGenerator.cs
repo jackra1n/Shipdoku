@@ -31,8 +31,8 @@ namespace Shipdoku.Services
                 EShipStartDirection direction;
                 do
                 {
-                    // Trz again after 10 unsuccessful tries of trying to Place a ship
-                    if (tryCount++ > 10)
+                    // Try again after 20 unsuccessful tries of trying to Place a ship
+                    if (tryCount++ > 20)
                     {
                         return GenerateShipdokuModel();
                     }
