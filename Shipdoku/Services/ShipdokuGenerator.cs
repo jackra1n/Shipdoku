@@ -118,10 +118,9 @@ namespace Shipdoku.Services
 
         private static void FillInShip(EShipdokuField[,] field, int xCoordinate, int yCoordinate, int length, EShipStartDirection direction)
         {
-            // ToDo: anpassen
             for (int i = 0; i < length; i++)
             {
-                field[xCoordinate, yCoordinate] = EShipdokuField.ShipMiddle;
+                field[xCoordinate, yCoordinate] = GetShipPart(i, length, direction);
 
                 switch (direction)
                 {
@@ -139,6 +138,60 @@ namespace Shipdoku.Services
                         break;
                 }
 
+            }
+        }
+
+        private static EShipdokuField GetShipPart(int index, int length, EShipStartDirection direction)
+        {
+            if (length == 0)
+            {
+                return EShipdokuField.ShipSingle;
+            }
+            else if (index == 0)
+            {
+                return GetShipFieldFromDirection(direction);
+            }
+            else if (index  == length)
+            {
+                return GetShipFieldFromDirection(InvertDirection(direction));
+            }
+            else
+            {
+                return EShipdokuField.ShipMiddle;
+            }
+        }
+
+        private static EShipStartDirection InvertDirection(EShipStartDirection direction)
+        {
+            switch (direction)
+            {
+                case EShipStartDirection.Up:
+                    return EShipStartDirection.Down;
+                case EShipStartDirection.Down:
+                    return EShipStartDirection.Up;
+                case EShipStartDirection.Left:
+                    return EShipStartDirection.Right;
+                case EShipStartDirection.Right:
+                    return EShipStartDirection.Left;
+                default:
+                    throw new NotSupportedException();
+            }
+        }
+
+        private static EShipdokuField GetShipFieldFromDirection(EShipStartDirection direction)
+        {
+            switch (direction)
+            {
+                case EShipStartDirection.Up:
+                    return EShipdokuField.ShipDown;
+                case EShipStartDirection.Down:
+                    return EShipdokuField.ShipUp;
+                case EShipStartDirection.Left:
+                    return EShipdokuField.ShipRight;
+                case EShipStartDirection.Right:
+                    return EShipdokuField.ShipLeft;
+                default:
+                    throw new NotSupportedException();
             }
         }
 
