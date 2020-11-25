@@ -27,6 +27,7 @@ namespace Shipdoku
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.Register<IShipdokuGenerator, ShipdokuGenerator>();
+            containerRegistry.Register<IExportService, ExportService>();
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
