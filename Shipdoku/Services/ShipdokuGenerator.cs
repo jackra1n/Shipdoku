@@ -19,6 +19,7 @@ namespace Shipdoku.Services
         public ShipdokuModel GenerateShipdokuModel()
         {
             var shipdokuField = new EShipdokuField[PlayingFieldWidht,PlayingFieldHeight];
+            ReplaceEmptyFieldsWithWater(shipdokuField);
             var playingfield = new ShipdokuModel();
 
             foreach (var shipLegth in _ships.OrderByDescending(l => l))
@@ -31,8 +32,8 @@ namespace Shipdoku.Services
                 EShipStartDirection direction;
                 do
                 {
-                    // Trz again after 10 unsuccessful tries of trying to Place a ship
-                    if (tryCount++ > 10)
+                    // Try again after 20 unsuccessful tries of trying to Place a ship
+                    if (tryCount++ > 20)
                     {
                         return GenerateShipdokuModel();
                     }
@@ -47,7 +48,6 @@ namespace Shipdoku.Services
                 FillInShip(shipdokuField, startX, startY, shipLegth, direction);
             }
 
-            ReplaceEmptyFieldWithWater(shipdokuField);
 
             playingfield.HorizontalCounts = GetShipCountsForRows(shipdokuField);
 
@@ -120,7 +120,8 @@ namespace Shipdoku.Services
         {
             for (int i = 0; i < length; i++)
             {
-                field[xCoordinate, yCoordinate] = EShipdokuField.ShipMiddle;
+                var ka = GetShipPart(i + 1, length, direction);
+                field[yCoordinate, xCoordinate] = GetShipPart(i + 1, length, direction);
 
                 switch (direction)
                 {
@@ -141,11 +142,65 @@ namespace Shipdoku.Services
             }
         }
 
+        private static EShipdokuField GetShipPart(int index, int length, EShipStartDirection direction)
+        {
+            if (length == 1)
+            {
+                return EShipdokuField.ShipSingle;
+            }
+            else if (index == 1)
+            {
+                return GetShipFieldFromDirection(direction);
+            }
+            else if (index == length)
+            {
+                return GetShipFieldFromDirection(InvertDirection(direction));
+            }
+            else
+            {
+                return EShipdokuField.ShipMiddle;
+            }
+        }
+
+        private static EShipStartDirection InvertDirection(EShipStartDirection direction)
+        {
+            switch (direction)
+            {
+                case EShipStartDirection.Up:
+                    return EShipStartDirection.Down;
+                case EShipStartDirection.Down:
+                    return EShipStartDirection.Up;
+                case EShipStartDirection.Left:
+                    return EShipStartDirection.Right;
+                case EShipStartDirection.Right:
+                    return EShipStartDirection.Left;
+                default:
+                    throw new NotSupportedException();
+            }
+        }
+
+        private static EShipdokuField GetShipFieldFromDirection(EShipStartDirection direction)
+        {
+            switch (direction)
+            {
+                case EShipStartDirection.Up:
+                    return EShipdokuField.ShipDown;
+                case EShipStartDirection.Down:
+                    return EShipdokuField.ShipUp;
+                case EShipStartDirection.Left:
+                    return EShipdokuField.ShipRight;
+                case EShipStartDirection.Right:
+                    return EShipdokuField.ShipLeft;
+                default:
+                    throw new NotSupportedException();
+            }
+        }
+
         private static bool CheckSurroundingsOfShip(EShipdokuField[,] field, int xCoordinate, int yCoordinate, int length, EShipStartDirection direction)
         {
             for (int i = 0; i < length; i++)
             {
-                if (!CheckSurroundingsOfField(field, xCoordinate, yCoordinate))
+                if (!CheckSurroundingsOfField(field, yCoordinate, xCoordinate))
                 {
                     return false;
                 }
@@ -171,15 +226,16 @@ namespace Shipdoku.Services
             return true;
         }
         
-        private static bool CheckSurroundingsOfField(EShipdokuField[,] field, in int xCoordinate, in int yCoordinate)
-        {
-            if (xCoordinate > 7 || xCoordinate < 0
-                || yCoordinate > 7 || yCoordinate < 0
-                || field[xCoordinate, yCoordinate] == EShipdokuField.ShipMiddle // Feld checken
-                || (xCoordinate != 0 && field[xCoordinate - 1, yCoordinate] == EShipdokuField.ShipMiddle)
-                || (xCoordinate != PlayingFieldWidht - 1 && field[xCoordinate + 1, yCoordinate] == EShipdokuField.ShipMiddle)
-                || (yCoordinate != 0 && field[xCoordinate, yCoordinate - 1] == EShipdokuField.ShipMiddle)
-                || (yCoordinate != PlayingFieldHeight - 1 && field[xCoordinate, yCoordinate + 1] == EShipdokuField.ShipMiddle))
+        private static bool CheckSurroundingsOfField(EShipdokuField[,] field, int yCoordinate, int xCoordinate)
+        { 
+            if (yCoordinate > 7 || yCoordinate < 0
+                || xCoordinate > 7 || xCoordinate < 0
+                || field[yCoordinate, xCoordinate] != EShipdokuField.Water // Feld checken
+                || !CheckForDiagonalShips(field, yCoordinate, xCoordinate)
+                || (yCoordinate != 0 && field[yCoordinate - 1, xCoordinate] != EShipdokuField.Water)
+                || (yCoordinate != PlayingFieldWidht - 1 && field[yCoordinate + 1, xCoordinate] != EShipdokuField.Water)
+                || (xCoordinate != 0 && field[yCoordinate, xCoordinate - 1] != EShipdokuField.Water)
+                || (xCoordinate != PlayingFieldHeight - 1 && field[yCoordinate, xCoordinate + 1] != EShipdokuField.Water))
             {
                 return false;
             }
@@ -187,11 +243,32 @@ namespace Shipdoku.Services
             return true;
         }
 
-        private static void ReplaceEmptyFieldWithWater(EShipdokuField[,] field)
+        private static bool CheckForDiagonalShips(EShipdokuField[,] solvedShipdokuField, int yCoordinate, int xCoordinate)
+        {
+            if (yCoordinate != 0 && xCoordinate != 0 &&
+                    solvedShipdokuField[yCoordinate - 1, xCoordinate - 1] != EShipdokuField.Water)
+                return false;
+
+            if (yCoordinate != PlayingFieldWidht - 1 && xCoordinate != 0 &&
+                    solvedShipdokuField[yCoordinate + 1, xCoordinate - 1] != EShipdokuField.Water)
+                return false;
+
+            if (yCoordinate != PlayingFieldWidht - 1 && xCoordinate != PlayingFieldHeight - 1 &&
+                    solvedShipdokuField[yCoordinate + 1, xCoordinate + 1] != EShipdokuField.Water)
+                return false;
+
+            if (yCoordinate != 0 && xCoordinate != PlayingFieldHeight - 1 &&
+                    solvedShipdokuField[yCoordinate - 1, xCoordinate + 1] != EShipdokuField.Water)
+                return false;
+
+            return true;
+        }
+
+        private static void ReplaceEmptyFieldsWithWater(EShipdokuField[,] field)
         {
             for (int i = 0; i < PlayingFieldWidht; i++)
             {
-                for (int j = 0; j < PlayingFieldWidht; j++)
+                for (int j = 0; j < PlayingFieldHeight; j++)
                 {
                     if (field[i,j] == EShipdokuField.Empty)
                     {

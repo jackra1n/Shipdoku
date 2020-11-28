@@ -32,7 +32,7 @@ namespace Shipdoku.ViewModels
         private void Export()
         {
             // ToDo: nicht immer Solved exportieren
-            _exportService.ExportPlayingFieldToPng(Playingfield, true);
+            _exportService.ExportPlayingFieldToPng(Playingfield, false);
         }
     }
 }
