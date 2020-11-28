@@ -41,12 +41,12 @@ namespace Shipdoku.Views
                     //playingfieldbutton.CommandParameter = "1,1";
                     playingFieldbutton.Width = 50;
                     playingFieldbutton.Height = 50;
-                    var binding = new Binding();
-                    binding.Source = $"Field[{x}, {y}]";
+                    //var binding = new Binding();
+                    //binding.Source = $"Field[{x}, {y}]";
                     //binding.Path = new PropertyPath($"Field[{x}, {y}]");
                     //binding.Converter = imageConverter;
                     var image = new Image();
-                    playingFieldbutton.SetBinding(Button.ContentProperty, $"Field[{x}, {y}]");
+                    playingFieldbutton.SetBinding(Button.ContentProperty, $"Playingfield[{x}, {y}]");
                     stackPanel.Children.Add(playingFieldbutton);
                     buttonNumber++;
                 }

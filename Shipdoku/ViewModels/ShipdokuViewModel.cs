@@ -25,11 +25,18 @@ namespace Shipdoku.ViewModels
             Playingfield = _shipdokuGenerator.GenerateShipdokuModel();
 
             ExportCommand = new DelegateCommand(Export);
+            GenerateNewFieldCommand = new DelegateCommand(GenerateNewField);
         }
 
         public DelegateCommand ExportCommand { get; set; }
+        public DelegateCommand GenerateNewFieldCommand { get; set; }
 
         public ShipdokuModel Playingfield { get; set; }
+
+        private void GenerateNewField()
+        {
+            Playingfield = _shipdokuGenerator.GenerateShipdokuModel();
+        }
 
         private void Export()
         {
