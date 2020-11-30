@@ -14,22 +14,23 @@ namespace Shipdoku.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             EShipdokuField shipdokuField = (EShipdokuField) value;
+            String imagesDirectory = "Images";
             switch (shipdokuField)
             {
                 case EShipdokuField.Water:
-                    return "/Images/water.png";
+                    return imagesDirectory + "/water.png";
                 case EShipdokuField.ShipMiddle:
-                    return "/Images/shipMiddle.png";
+                    return imagesDirectory + "/shipMiddle.png";
                 case EShipdokuField.ShipDown:
-                    return "/Images/shipDown.png";
+                    return imagesDirectory + "/shipDown.png";
                 case EShipdokuField.ShipLeft:
-                    return "/Images/shipLeft.png";
+                    return imagesDirectory + "/shipLeft.png";
                 case EShipdokuField.ShipUp:
-                    return "/Images/shipUp.png";
+                    return imagesDirectory + "/shipUp.png";
                 case EShipdokuField.ShipRight:
-                    return "/Images/shipRight.png";
+                    return imagesDirectory + "/shipRight.png";
                 case EShipdokuField.ShipSingle:
-                    return "/Images/shipSingle.png";
+                    return imagesDirectory + "/shipSingle.png";
                 default:
                     return string.Empty;
             }
