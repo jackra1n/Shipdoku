@@ -22,7 +22,7 @@ namespace Shipdoku.ViewModels
             _shipdokuGenerator = shipdokuGenerator;
             _exportService = exportService;
 
-            Playingfield = _shipdokuGenerator.GenerateShipdokuModel();
+            ShipdokuModel = _shipdokuGenerator.GenerateShipdokuModel();
 
             ExportCommand = new DelegateCommand(Export);
             GenerateNewFieldCommand = new DelegateCommand(GenerateNewField);
@@ -31,17 +31,19 @@ namespace Shipdoku.ViewModels
         public DelegateCommand ExportCommand { get; set; }
         public DelegateCommand GenerateNewFieldCommand { get; set; }
 
-        public ShipdokuModel Playingfield { get; set; }
+        public ShipdokuModel ShipdokuModel { get; set; }
+
+        public EShipdokuField[,] PlayingField => ShipdokuModel.SolvedShipdokuField;
 
         private void GenerateNewField()
         {
-            Playingfield = _shipdokuGenerator.GenerateShipdokuModel();
+            ShipdokuModel = _shipdokuGenerator.GenerateShipdokuModel();
         }
 
         private void Export()
         {
             // ToDo: nicht immer Solved exportieren
-            _exportService.ExportPlayingFieldToPng(Playingfield, true);
+            _exportService.ExportPlayingFieldToPng(ShipdokuModel, true);
         }
     }
 }

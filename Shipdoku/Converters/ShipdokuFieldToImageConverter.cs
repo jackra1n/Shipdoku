@@ -17,19 +17,19 @@ namespace Shipdoku.Converters
             switch (shipdokuField)
             {
                 case EShipdokuField.Water:
-                    return "Images/water.png";
+                    return "/Images/water.png";
                 case EShipdokuField.ShipMiddle:
-                    return "Images/shipMiddle.png";
+                    return "/Images/shipMiddle.png";
                 case EShipdokuField.ShipDown:
-                    return "Images/shipDown.png";
+                    return "/Images/shipDown.png";
                 case EShipdokuField.ShipLeft:
-                    return "Images/shipLeft.png";
+                    return "/Images/shipLeft.png";
                 case EShipdokuField.ShipUp:
-                    return "Images/shipUp.png";
+                    return "/Images/shipUp.png";
                 case EShipdokuField.ShipRight:
-                    return "Images/shipRight.png";
+                    return "/Images/shipRight.png";
                 case EShipdokuField.ShipSingle:
-                    return "Images/shipSingle.png";
+                    return "/Images/shipSingle.png";
                 default:
                     return string.Empty;
             }

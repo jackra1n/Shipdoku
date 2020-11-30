@@ -25,8 +25,8 @@ namespace Shipdoku.Views
             InitializeComponent();
 
             var imageConverter = new ShipdokuFieldToImageConverter();
+            var arrayMultiConverter = new MultiDimensionalCoverter();
 
-            int buttonNumber = 0;
             for (int y = 0; y < 8; y++)
             {
                 StackPanel stackPanel = new StackPanel
@@ -45,11 +45,32 @@ namespace Shipdoku.Views
                     //binding.Source = $"Field[{x}, {y}]";
                     //binding.Path = new PropertyPath($"Field[{x}, {y}]");
                     //binding.Converter = imageConverter;
+
+                    Binding array = new Binding("PlayingField");
+                    Binding xBinding = new Binding();
+                    xBinding.Source = x;
+                    Binding yBinding = new Binding();
+                    yBinding.Source = y;
+
+                    MultiBinding multiBinding = new MultiBinding();
+                    multiBinding.Bindings.Add(array);
+                    multiBinding.Bindings.Add(xBinding);
+                    multiBinding.Bindings.Add(yBinding);
+
+                    multiBinding.Converter = arrayMultiConverter;
+
                     var image = new Image();
-                    playingFieldbutton.SetBinding(Button.ContentProperty, $"Playingfield[{x}, {y}]");
+                    image.Width = 50;
+                    image.Height = 50;
+
+                    image.SetBinding(Image.SourceProperty, multiBinding);
+
+                    playingFieldbutton.Content = image;
+
                     stackPanel.Children.Add(playingFieldbutton);
-                    buttonNumber++;
                 }
+
+
                 PlayingFieldPanel.Children.Add(stackPanel);
                     //image.Source = new Binding("playingfield[1,1] conv");
                 //playingfieldbutton.Content = new Image();
