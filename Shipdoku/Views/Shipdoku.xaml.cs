@@ -27,54 +27,37 @@ namespace Shipdoku.Views
             var imageConverter = new ShipdokuFieldToImageConverter();
             var arrayMultiConverter = new MultiDimensionalCoverter();
 
-            for (int y = 0; y < 8; y++)
+            for (int row = 0; row < 8; row++)
             {
-                StackPanel stackPanel = new StackPanel
+                StackPanel gameFieldPanel = new StackPanel
                 {
-                    Name = "panelRow" + y,
+                    Name = "panelRow" + row,
                     Orientation = Orientation.Horizontal
                 };
-                for (int x = 0; x < 8; x++)
+                for (int column = 0; column < 8; column++)
                 {
-                    var playingFieldbutton = new Button();
-                    //playingfieldbutton.Command = new Binding("");
-                    //playingfieldbutton.CommandParameter = "1,1";
-                    playingFieldbutton.Width = 50;
-                    playingFieldbutton.Height = 50;
-                    //var binding = new Binding();
-                    //binding.Source = $"Field[{x}, {y}]";
-                    //binding.Path = new PropertyPath($"Field[{x}, {y}]");
-                    //binding.Converter = imageConverter;
-
-                    Binding array = new Binding("PlayingField");
+                    Binding gameFieldArray = new Binding("PlayingField");
                     Binding xBinding = new Binding();
-                    xBinding.Source = x;
                     Binding yBinding = new Binding();
-                    yBinding.Source = y;
+                    xBinding.Source = column;
+                    yBinding.Source = row;
 
                     MultiBinding multiBinding = new MultiBinding();
-                    multiBinding.Bindings.Add(array);
+                    multiBinding.Bindings.Add(gameFieldArray);
                     multiBinding.Bindings.Add(xBinding);
                     multiBinding.Bindings.Add(yBinding);
-
                     multiBinding.Converter = arrayMultiConverter;
 
-                    var image = new Image();
-                    image.Width = 50;
-                    image.Height = 50;
+                    var btnImage = new Image();
+                    btnImage.SetBinding(Image.SourceProperty, multiBinding);
 
-                    image.SetBinding(Image.SourceProperty, multiBinding);
-
-                    playingFieldbutton.Content = image;
-
-                    stackPanel.Children.Add(playingFieldbutton);
+                    var playingFieldbutton = new Button();
+                    playingFieldbutton.Width = 50;
+                    playingFieldbutton.Height = 50;
+                    playingFieldbutton.Content = btnImage;
+                    gameFieldPanel.Children.Add(playingFieldbutton);
                 }
-
-
-                PlayingFieldPanel.Children.Add(stackPanel);
-                    //image.Source = new Binding("playingfield[1,1] conv");
-                //playingfieldbutton.Content = new Image();
-
+                PlayingFieldPanel.Children.Add(gameFieldPanel);
             }
         }
     }
