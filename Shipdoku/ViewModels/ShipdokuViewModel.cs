@@ -16,6 +16,7 @@ namespace Shipdoku.ViewModels
     {
         private readonly IShipdokuGenerator _shipdokuGenerator;
         private readonly IExportService _exportService;
+        private ShipdokuModel _shipdokuModel;
 
         public ShipdokuViewModel(IShipdokuGenerator shipdokuGenerator, IExportService exportService)
         {
@@ -31,7 +32,15 @@ namespace Shipdoku.ViewModels
         public DelegateCommand ExportCommand { get; set; }
         public DelegateCommand GenerateNewFieldCommand { get; set; }
 
-        public ShipdokuModel ShipdokuModel { get; set; }
+        public ShipdokuModel ShipdokuModel
+        {
+            get => _shipdokuModel;
+            set
+            {
+                SetProperty(ref _shipdokuModel, value);
+                RaisePropertyChanged(nameof(PlayingField));
+            }
+        }
 
         public EShipdokuField[,] PlayingField => ShipdokuModel.SolvedShipdokuField;
 
