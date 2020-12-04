@@ -44,8 +44,8 @@ namespace Shipdoku.Views
 
                     MultiBinding multiBinding = new MultiBinding();
                     multiBinding.Bindings.Add(gameFieldArray);
-                    multiBinding.Bindings.Add(xBinding);
                     multiBinding.Bindings.Add(yBinding);
+                    multiBinding.Bindings.Add(xBinding);
                     multiBinding.Converter = arrayMultiConverter;
 
                     var btnImage = new Image();
