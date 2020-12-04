@@ -109,9 +109,10 @@ namespace Shipdoku.Services
 
                     graphics.FillRectangle(_whiteBrush, fieldRectangle);
 
-                    if (shipdokuField[column, row] != EShipdokuField.Empty)
+                    string path = (string)_converter.Convert(shipdokuField[row, column], null, null, null);
+                    if (shipdokuField[row, column] != EShipdokuField.Empty && !string.IsNullOrEmpty(path))
                     {
-                        Image fieldImage = Image.FromFile((string)_converter.Convert(shipdokuField[row, column], null, null, null));
+                        Image fieldImage = Image.FromFile(path);
 
                         graphics.DrawImage(fieldImage, marginLeft, marginTop, pixelPerField, pixelPerField);
                     }

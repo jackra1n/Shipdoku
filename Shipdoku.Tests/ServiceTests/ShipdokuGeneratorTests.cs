@@ -85,6 +85,7 @@ namespace Shipdoku.Tests.ServiceTests
             var result = _testee.GenerateShipdokuModel();
 
             // Assert
+            PrintField(result.SolvedShipdokuField, result.HorizontalCounts, result.VerticalCounts);
             for (int column = 0; column < result.SolvedShipdokuField.GetLength(0); column++)
             {
                 for (int row = 0; row < result.SolvedShipdokuField.GetLength(1); row++)
@@ -140,15 +141,37 @@ namespace Shipdoku.Tests.ServiceTests
         private bool CheckIfFieldIsValid(EShipdokuField[,] solvedShipdokuField, int column, int row)
         {
             if (solvedShipdokuField[column, row] == EShipdokuField.Water ||
-                GetCountOfSurroundingShips(solvedShipdokuField, column, row) == 0 ||
-                GetCountOfSurroundingShips(solvedShipdokuField, column, row) == 1 ||
-                GetCountOfSurroundingShips(solvedShipdokuField, column, row) == 2 &&
-                CheckIfTwoSurroundingShipTilesAreValid(solvedShipdokuField, column, row))
+                CheckForDiagonalShips(solvedShipdokuField, column, row) &&
+                    (GetCountOfSurroundingShips(solvedShipdokuField, column, row) == 0 ||
+                    GetCountOfSurroundingShips(solvedShipdokuField, column, row) == 1 ||
+                    GetCountOfSurroundingShips(solvedShipdokuField, column, row) == 2 &&
+                    CheckIfTwoSurroundingShipTilesAreValid(solvedShipdokuField, column, row)))
             {
                 return true;
             }
 
              return false;
+        }
+
+        private bool CheckForDiagonalShips(EShipdokuField[,] solvedShipdokuField, int column, int row)
+        {
+            if (column != 0 && row != 0 &&
+                solvedShipdokuField[column - 1, row - 1] != EShipdokuField.Water)
+                return false;
+
+            if (column < (solvedShipdokuField.GetLength(0) - 1) && row != 0 &&
+                solvedShipdokuField[column + 1, row - 1] != EShipdokuField.Water)
+                return false;
+
+            if (column < (solvedShipdokuField.GetLength(0) - 1) && row < (solvedShipdokuField.GetLength(1) - 1) &&
+                solvedShipdokuField[column + 1, row + 1] != EShipdokuField.Water)
+                return false;
+
+            if (column != 0 && row < (solvedShipdokuField.GetLength(1) - 1) &&
+                solvedShipdokuField[column - 1, row + 1] != EShipdokuField.Water)
+                return false;
+
+            return true;
         }
 
         private bool CheckIfTwoSurroundingShipTilesAreValid(EShipdokuField[,] solvedShipdokuField, int column, int row)
@@ -195,8 +218,6 @@ namespace Shipdoku.Tests.ServiceTests
 
             return count;
         }
-
-
 
         #endregion
     }
