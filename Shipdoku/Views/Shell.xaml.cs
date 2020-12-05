@@ -1,6 +1,4 @@
-﻿using Prism.Regions;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,7 +19,6 @@ namespace Shipdoku.Views
         public Shell()
         {
             InitializeComponent();
-
         }
     }
 }
