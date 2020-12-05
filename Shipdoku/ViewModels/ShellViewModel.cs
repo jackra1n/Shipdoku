@@ -16,17 +16,12 @@ namespace Shipdoku.ViewModels
             set { SetProperty(ref _title, value); }
         }
 
-        public DelegateCommand<string> NavigateCommand { get; private set; }
 
         public ShellViewModel(IRegionManager regionManager)
         {
             _regionManager = regionManager;
-            NavigateCommand = new DelegateCommand<string>(Navigate);
         }
-        private void Navigate(string navigatePath)
-        {
-            if (navigatePath != null)
-                _regionManager.RequestNavigate("ContentRegion", navigatePath);
-        }
+
+        
     }
 }

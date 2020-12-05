@@ -11,9 +11,9 @@ namespace Shipdoku.Models
     public class ShipdokuModel : BindableBase
     {
         // private Fields
-        private EShipdokuField[,] _shipdokuField;
-        private int[] _horizontalCounts;
-        private int[] _verticalCounts;
+        private EShipdokuField[,] _shipdokuField = new EShipdokuField[8,8];
+        private int[] _horizontalCounts = new int[8];
+        private int[] _verticalCounts = new int[8];
 
         /// <summary>
         /// Property für die verschiedenen Anzahlen von Schiffen den horizontalen Zeilen

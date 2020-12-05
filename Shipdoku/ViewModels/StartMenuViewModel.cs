@@ -20,10 +20,12 @@ namespace Shipdoku.ViewModels
             NavigateCommand = new DelegateCommand<string>(Navigate);
         }
 
-        private void Navigate(string navigatePath)
+        private void Navigate(string createEmpty)
         {
-            if (navigatePath != null)
-                _regionManager.RequestNavigate("ContentRegion", navigatePath, new NavigationParameters());
+            var navParameters = new NavigationParameters();
+            navParameters.Add("createEmpty", bool.Parse(createEmpty));
+            _regionManager.RequestNavigate("ContentRegion", "Shipdoku", navParameters);
         }
+
     }
 }

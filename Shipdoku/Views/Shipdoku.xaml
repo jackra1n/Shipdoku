@@ -33,10 +33,10 @@
                             <Button Height="40" Width="40" HorizontalAlignment="Left" Command="{Binding SetCurrentFieldTypeCommand}" CommandParameter="ShipDown">
                                 <Image Source="/Images/shipDown.png"/>
                             </Button>
-                            <Button Height="40" Width="40" HorizontalAlignment="Left" Command="{Binding SetCurrentFieldTypeCommand}" CommandParameter="ShipDown">
+                            <Button Height="40" Width="40" HorizontalAlignment="Left" Command="{Binding SetCurrentFieldTypeCommand}" CommandParameter="ShipSingle">
                                 <Image Source="/Images/shipSingle.png"/>
                             </Button>
-                            <Button Height="40" Width="40" HorizontalAlignment="Left" Command="{Binding SetCurrentFieldTypeCommand}" CommandParameter="ShipDown">
+                            <Button Height="40" Width="40" HorizontalAlignment="Left" Command="{Binding SetCurrentFieldTypeCommand}" CommandParameter="ShipMiddle">
                                 <Image Source="/Images/shipMiddle.png"/>
                             </Button>
                         </StackPanel>
@@ -46,16 +46,17 @@
                     </Button>
                 </StackPanel>
             </StackPanel>
-            <StackPanel Height="300">
+            <StackPanel Height="270">
             </StackPanel>
-            <StackPanel Height="90">
+            <StackPanel Height="120">
                 <Button Height="30" HorizontalAlignment="Center" Content="Exportieren" Margin="0,10,0,0" FontSize="18" Command="{Binding ExportCommand}"/>
                 <Button Height="30" HorizontalAlignment="Center" Content="Neu generieren" Margin="0,10,0,0" FontSize="18" Command="{Binding GenerateNewFieldCommand}"/>
+                <Button Height="30" HorizontalAlignment="Center" Content="Start Menu" Margin="0,10,0,0" FontSize="18" Command="{Binding StartMenuNavigateCommand}"/>
             </StackPanel>
         </StackPanel>
         <StackPanel>
             <Label Content="Shipdoku" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,10,0,0" FontSize="32"/>
-            <StackPanel x:Name="PlayingFieldPanel" HorizontalAlignment="Center" VerticalAlignment="Center" Width="420" Height="420" Orientation="Vertical"/>
+            <StackPanel x:Name="PlayingFieldPanel" HorizontalAlignment="Center" VerticalAlignment="Center" Width="450" Height="450" Orientation="Vertical"/>
         </StackPanel>
     </DockPanel>
 </UserControl>
