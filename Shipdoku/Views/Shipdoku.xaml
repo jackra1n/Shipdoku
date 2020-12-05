@@ -16,11 +16,32 @@
     <DockPanel>
         <StackPanel Width="180" HorizontalAlignment="Left">
             <StackPanel Height="140">
-                <StackPanel HorizontalAlignment="Center">
-                    <Button Height="40" Width="40" HorizontalAlignment="Left" Margin="00,80,0,-40">
-                        <Image Source="/Images/shipIcon.png"/>
-                    </Button>
-                    <Button Height="40" Width="40" HorizontalAlignment="Left" Margin="80,0,0,0">
+                <StackPanel HorizontalAlignment="Center" Margin="0,10,0,0">
+                    <StackPanel Height="80">
+                        <StackPanel Height="40" Orientation="Horizontal">
+                            <Button Height="40" Width="40" HorizontalAlignment="Left" Command="{Binding SetCurrentFieldTypeCommand}" CommandParameter="ShipUp">
+                                <Image Source="/Images/shipUp.png"/>
+                            </Button>
+                            <Button Height="40" Width="40" HorizontalAlignment="Left" Command="{Binding SetCurrentFieldTypeCommand}" CommandParameter="ShipLeft">
+                                <Image Source="/Images/shipLeft.png"/>
+                            </Button>
+                            <Button Height="40" Width="40" HorizontalAlignment="Left" Command="{Binding SetCurrentFieldTypeCommand}" CommandParameter="ShipRight">
+                                <Image Source="/Images/shipRight.png"/>
+                            </Button>
+                        </StackPanel>
+                        <StackPanel Height="40" Orientation="Horizontal">
+                            <Button Height="40" Width="40" HorizontalAlignment="Left" Command="{Binding SetCurrentFieldTypeCommand}" CommandParameter="ShipDown">
+                                <Image Source="/Images/shipDown.png"/>
+                            </Button>
+                            <Button Height="40" Width="40" HorizontalAlignment="Left" Command="{Binding SetCurrentFieldTypeCommand}" CommandParameter="ShipDown">
+                                <Image Source="/Images/shipSingle.png"/>
+                            </Button>
+                            <Button Height="40" Width="40" HorizontalAlignment="Left" Command="{Binding SetCurrentFieldTypeCommand}" CommandParameter="ShipDown">
+                                <Image Source="/Images/shipMiddle.png"/>
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                    <Button Height="40" Width="40" HorizontalAlignment="Left" Margin="40,0,0,0"  Command="{Binding SetCurrentFieldTypeCommand}" CommandParameter="Water">
                         <Image Source="/Images/water.png"/>
                     </Button>
                 </StackPanel>
@@ -34,7 +55,7 @@
         </StackPanel>
         <StackPanel>
             <Label Content="Shipdoku" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,10,0,0" FontSize="32"/>
-            <StackPanel x:Name="PlayingFieldPanel" HorizontalAlignment="Center" VerticalAlignment="Center" Width="400" Height="400" Orientation="Vertical"/>
+            <StackPanel x:Name="PlayingFieldPanel" HorizontalAlignment="Center" VerticalAlignment="Center" Width="420" Height="420" Orientation="Vertical"/>
         </StackPanel>
     </DockPanel>
 </UserControl>

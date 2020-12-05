@@ -27,7 +27,7 @@ namespace Shipdoku.Views
             var imageConverter = new ShipdokuFieldToImageConverter();
             var arrayMultiConverter = new MultiDimensionalCoverter();
 
-            for (int row = 0; row < 8; row++)
+            for (int row = 0; row < 9; row++)
             {
                 StackPanel gameFieldPanel = new StackPanel
                 {
@@ -36,28 +36,44 @@ namespace Shipdoku.Views
                 };
                 for (int column = 0; column < 8; column++)
                 {
-                    Binding gameFieldArray = new Binding("PlayingField");
-                    Binding xBinding = new Binding();
-                    Binding yBinding = new Binding();
-                    xBinding.Source = column;
-                    yBinding.Source = row;
+                    if (row < 8)
+                    {
+                        Binding gameFieldArray = new Binding("PlayingField");
+                        Binding xBinding = new Binding();
+                        Binding yBinding = new Binding();
+                        xBinding.Source = column;
+                        yBinding.Source = row;
 
-                    MultiBinding multiBinding = new MultiBinding();
-                    multiBinding.Bindings.Add(gameFieldArray);
-                    multiBinding.Bindings.Add(yBinding);
-                    multiBinding.Bindings.Add(xBinding);
-                    multiBinding.Converter = arrayMultiConverter;
+                        MultiBinding multiBinding = new MultiBinding();
+                        multiBinding.Bindings.Add(gameFieldArray);
+                        multiBinding.Bindings.Add(yBinding);
+                        multiBinding.Bindings.Add(xBinding);
+                        multiBinding.Converter = arrayMultiConverter;
 
-                    var btnImage = new Image();
-                    btnImage.SetBinding(Image.SourceProperty, multiBinding);
+                        var btnImage = new Image();
+                        btnImage.SetBinding(Image.SourceProperty, multiBinding);
 
-                    var playingFieldbutton = new Button();
-                    playingFieldbutton.Width = 50;
-                    playingFieldbutton.Height = 50;
-                    playingFieldbutton.Content = btnImage;
-                    gameFieldPanel.Children.Add(playingFieldbutton);
+                        var playingFieldbutton = new Button();
+                        playingFieldbutton.Width = 50;
+                        playingFieldbutton.Height = 50;
+                        playingFieldbutton.Content = btnImage;
+                        gameFieldPanel.Children.Add(playingFieldbutton);
+                    }
+                    else
+                    {
+                        TextBox columnShipCount = new TextBox();
+                        columnShipCount.Width = 40;
+                        Binding columnCountBinding = new Binding($"ShipdokuModel.VerticalCounts[{column}]");
+                        columnShipCount.SetBinding(TextBox.TextProperty, columnCountBinding);
+                        gameFieldPanel.Children.Add(columnShipCount);
+                    }
                 }
+                TextBox rowShipCount = new TextBox();
+                Binding rowCountBinding = new Binding($"ShipdokuModel.HorizontalCounts[{row}]");
+                rowShipCount.SetBinding(TextBox.TextProperty, rowCountBinding);
+                gameFieldPanel.Children.Add(rowShipCount);
                 PlayingFieldPanel.Children.Add(gameFieldPanel);
+                
             }
         }
     }

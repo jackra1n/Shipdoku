@@ -17,6 +17,7 @@ namespace Shipdoku.ViewModels
         private readonly IShipdokuGenerator _shipdokuGenerator;
         private readonly IExportService _exportService;
         private ShipdokuModel _shipdokuModel;
+        private EShipdokuField _currentFieldType;
 
         public ShipdokuViewModel(IShipdokuGenerator shipdokuGenerator, IExportService exportService)
         {
@@ -27,10 +28,18 @@ namespace Shipdoku.ViewModels
 
             ExportCommand = new DelegateCommand(Export);
             GenerateNewFieldCommand = new DelegateCommand(GenerateNewField);
+            SetCurrentFieldTypeCommand = new DelegateCommand<string>(SetCurrentFieldType);
         }
 
         public DelegateCommand ExportCommand { get; set; }
         public DelegateCommand GenerateNewFieldCommand { get; set; }
+        public DelegateCommand<string> SetCurrentFieldTypeCommand { get; set; }
+
+
+        public void SetCurrentFieldType(string fieldType)
+        {
+            _currentFieldType = Enum.Parse<EShipdokuField>(fieldType);
+        }
 
         public ShipdokuModel ShipdokuModel
         {
@@ -42,7 +51,8 @@ namespace Shipdoku.ViewModels
             }
         }
 
-        public EShipdokuField[,] PlayingField => ShipdokuModel.SolvedShipdokuField;
+
+        public EShipdokuField[,] PlayingField => ShipdokuModel.ShipdokuField;
 
         private void GenerateNewField()
         {
@@ -52,7 +62,7 @@ namespace Shipdoku.ViewModels
         private void Export()
         {
             // ToDo: nicht immer Solved exportieren
-            _exportService.ExportPlayingFieldToPng(ShipdokuModel, true);
+            _exportService.ExportPlayingFieldToPng(ShipdokuModel, false);
         }
     }
 }
