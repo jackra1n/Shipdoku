@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -24,13 +25,17 @@ namespace Shipdoku.Views
         {
             InitializeComponent();
 
-            var imageConverter = new ShipdokuFieldToImageConverter();
+            InitializePlayingField();
+        }
+
+        private void InitializePlayingField()
+        {
             var arrayMultiConverter = new MultiDimensionalCoverter();
-            Binding createEmptyBinding = new Binding("CreateEmpty");
+            var createEmptyBinding = new Binding("IsCreateEmpty");
 
             for (int row = 0; row < 9; row++)
             {
-                StackPanel gameFieldPanel = new StackPanel
+                StackPanel gameFieldStackPanel = new StackPanel
                 {
                     Name = "panelRow" + row,
                     Orientation = Orientation.Horizontal
@@ -39,14 +44,12 @@ namespace Shipdoku.Views
                 {
                     if (column < 8 && row != 8)
                     {
-                        Binding gameFieldArray = new Binding("PlayingField");
-                        Binding xBinding = new Binding();
-                        Binding yBinding = new Binding();
-                        xBinding.Source = column;
-                        yBinding.Source = row;
+                        Binding gameFieldArrayBinding = new Binding("PlayingField");
+                        Binding xBinding = new Binding {Source = column};
+                        Binding yBinding = new Binding {Source = row};
 
                         MultiBinding multiBinding = new MultiBinding();
-                        multiBinding.Bindings.Add(gameFieldArray);
+                        multiBinding.Bindings.Add(gameFieldArrayBinding);
                         multiBinding.Bindings.Add(yBinding);
                         multiBinding.Bindings.Add(xBinding);
                         multiBinding.Converter = arrayMultiConverter;
@@ -54,45 +57,45 @@ namespace Shipdoku.Views
                         var btnImage = new Image();
                         btnImage.SetBinding(Image.SourceProperty, multiBinding);
 
-                        var playingFieldbutton = new Button();
-                        playingFieldbutton.Width = 50;
-                        playingFieldbutton.Height = 50;
-                        playingFieldbutton.Content = btnImage;
+                        var playingFieldbutton = new Button
+                        {
+                            Width = 50,
+                            Height = 50,
+                            Background = Brushes.White,
+                            Content = btnImage
+                        };
 
-                        Binding fieldClickBinding = new Binding($"ButtonCommand");
+                        Binding fieldClickBinding = new Binding($"SetFieldCommand");
                         playingFieldbutton.CommandParameter = $"{row},{column}";
-                        playingFieldbutton.SetBinding(Button.CommandProperty, fieldClickBinding);
+                        playingFieldbutton.SetBinding(ButtonBase.CommandProperty, fieldClickBinding);
 
-                        gameFieldPanel.Children.Add(playingFieldbutton);
+                        gameFieldStackPanel.Children.Add(playingFieldbutton);
                     }
-                    else if (row == 8 && column != 8)
+                    else if (row == 8 ^ column == 8)
                     {
-                        TextBox columnShipCount = new TextBox();
-                        columnShipCount.VerticalContentAlignment = VerticalAlignment.Center;
-                        columnShipCount.HorizontalContentAlignment = HorizontalAlignment.Center;
-                        columnShipCount.SetBinding(TextBox.IsEnabledProperty, createEmptyBinding);
-                        columnShipCount.FontSize = 18;
-                        columnShipCount.Width = 50;
-                        columnShipCount.Height = 50;
-                        Binding columnCountBinding = new Binding($"ShipdokuModel.HorizontalCounts[{column}]");
-                        columnShipCount.SetBinding(TextBox.TextProperty, columnCountBinding);
-                        gameFieldPanel.Children.Add(columnShipCount);
-                    }
-                    else if (row != 8)
-                    {
-                        TextBox rowShipCount = new TextBox();
-                        rowShipCount.VerticalContentAlignment = VerticalAlignment.Center;
-                        rowShipCount.HorizontalContentAlignment = HorizontalAlignment.Center;
-                        rowShipCount.SetBinding(TextBox.IsEnabledProperty, createEmptyBinding);
-                        rowShipCount.FontSize = 18;
-                        rowShipCount.Width = 50;
-                        rowShipCount.Height = 50;
-                        Binding rowCountBinding = new Binding($"ShipdokuModel.VerticalCounts[{row}]");
-                        rowShipCount.SetBinding(TextBox.TextProperty, rowCountBinding);
-                        gameFieldPanel.Children.Add(rowShipCount);
+                        var shipCountTextBox = new TextBox
+                        {
+                            VerticalContentAlignment = VerticalAlignment.Center,
+                            HorizontalContentAlignment = HorizontalAlignment.Center,
+                            FontSize = 18,
+                            Width = 50,
+                            Height = 50
+                        };
+                        shipCountTextBox.SetBinding(IsEnabledProperty, createEmptyBinding);
+
+                        Binding countBinding = null;
+
+                        if (row == 8 && column != 8)
+                            countBinding = new Binding($"ShipdokuModel.HorizontalCounts[{column}]");
+                        else if (row != 8)
+                            countBinding = new Binding($"ShipdokuModel.VerticalCounts[{row}]");
+
+                        shipCountTextBox.SetBinding(TextBox.TextProperty, countBinding);
+                        gameFieldStackPanel.Children.Add(shipCountTextBox);
                     }
                 }
-                PlayingFieldPanel.Children.Add(gameFieldPanel);
+
+                PlayingFieldPanel.Children.Add(gameFieldStackPanel);
             }
         }
     }

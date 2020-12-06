@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -14,7 +14,7 @@ namespace Shipdoku.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             EShipdokuField shipdokuField = (EShipdokuField) value;
-            String imagesDirectory = "Images";
+            string imagesDirectory = "Images";
             switch (shipdokuField)
             {
                 case EShipdokuField.Water:

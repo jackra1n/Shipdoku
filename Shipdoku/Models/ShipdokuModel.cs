@@ -12,6 +12,7 @@ namespace Shipdoku.Models
     {
         // private Fields
         private EShipdokuField[,] _shipdokuField = new EShipdokuField[8,8];
+        private EShipdokuField[,] _solvedShipdokuField = new EShipdokuField[8,8];
         private int[] _horizontalCounts = new int[8];
         private int[] _verticalCounts = new int[8];
 
@@ -45,6 +46,10 @@ namespace Shipdoku.Models
         /// <summary>
         /// Property mit einer möglichen Lösung des Rätels
         /// </summary>
-        public EShipdokuField[,] SolvedShipdokuField { get; set; }
+        public EShipdokuField[,] SolvedShipdokuField
+        {
+            get => _solvedShipdokuField;
+            set => SetProperty(ref _solvedShipdokuField, value);
+        }
     }
 }

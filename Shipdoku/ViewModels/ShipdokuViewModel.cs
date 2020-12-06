@@ -20,6 +20,9 @@ namespace Shipdoku.ViewModels
         private readonly IRegionManager _regionManager;
         private ShipdokuModel _shipdokuModel;
         private EShipdokuField _currentFieldType;
+        private bool _isCreateEmpty;
+        private bool _showSolution = false;
+        private bool _canShowSolution;
 
         public ShipdokuViewModel(IShipdokuGenerator shipdokuGenerator, IExportService exportService, IRegionManager regionManager)
         {
@@ -32,27 +35,17 @@ namespace Shipdoku.ViewModels
             ExportCommand = new DelegateCommand(Export);
             GenerateNewFieldCommand = new DelegateCommand(GenerateNewField);
             SetCurrentFieldTypeCommand = new DelegateCommand<string>(SetCurrentFieldType);
-            ButtonCommand = new DelegateCommand<string>(btn_Click);
+            SetFieldCommand = new DelegateCommand<string>(SetField);
             StartMenuNavigateCommand = new DelegateCommand(StartMenuNavigate);
         }
+
+        #region Properties
 
         public DelegateCommand ExportCommand { get; set; }
         public DelegateCommand GenerateNewFieldCommand { get; set; }
         public DelegateCommand<string> SetCurrentFieldTypeCommand { get; set; }
-        public DelegateCommand<string> ButtonCommand { get; set; }
-        public DelegateCommand StartMenuNavigateCommand { get; private set; }
-
-        public void btn_Click(string commandParameter)
-        {
-            var array = commandParameter.Split(',').Select(int.Parse).ToArray();
-            PlayingField[array[0], array[1]] = _currentFieldType;
-            RaisePropertyChanged(nameof(PlayingField));
-        }
-
-        public void SetCurrentFieldType(string fieldType)
-        {
-            _currentFieldType = Enum.Parse<EShipdokuField>(fieldType);
-        }
+        public DelegateCommand<string> SetFieldCommand { get; set; }
+        public DelegateCommand StartMenuNavigateCommand { get; }
 
         public ShipdokuModel ShipdokuModel
         {
@@ -64,18 +57,60 @@ namespace Shipdoku.ViewModels
             }
         }
 
+        public EShipdokuField CurrentFieldType
+        {
+            get => _currentFieldType;
+            set => SetProperty(ref _currentFieldType, value);
+        }
 
-        public bool CreateEmpty { get; set; }
-        public EShipdokuField[,] PlayingField => ShipdokuModel.ShipdokuField;
+        public bool IsCreateEmpty
+        {
+            get => _isCreateEmpty;
+            set => SetProperty(ref _isCreateEmpty ,value);
+        }
+
+        public EShipdokuField[,] PlayingField => ShowSolution ? ShipdokuModel.SolvedShipdokuField : ShipdokuModel.ShipdokuField;
+
+        public bool ShowSolution
+        {
+            get => _showSolution;
+            set
+            {
+                SetProperty(ref _showSolution, value);
+                RaisePropertyChanged(nameof(PlayingField));
+            }
+        }
+
+        public bool CanShowSolution
+        {
+            get => _canShowSolution;
+            set => SetProperty(ref _canShowSolution, value);
+        }
+
+        #endregion
+
+        public void SetCurrentFieldType(string fieldType)
+        {
+            CurrentFieldType = Enum.Parse<EShipdokuField>(fieldType);
+        }
+
+        public void SetField(string commandParameter)
+        {
+            var array = commandParameter.Split(',').Select(int.Parse).ToArray();
+            PlayingField[array[0], array[1]] = _currentFieldType;
+            RaisePropertyChanged(nameof(PlayingField));
+        }
 
         private void GenerateNewField()
         {
             ShipdokuModel = _shipdokuGenerator.GenerateShipdokuModel();
+            CanShowSolution = true;
+            IsCreateEmpty = false;
         }
 
         private void Export()
         {
-            _exportService.ExportPlayingFieldToPng(ShipdokuModel, false);
+            _exportService.ExportPlayingFieldToPng(ShipdokuModel, ShowSolution);
         }
 
         private void StartMenuNavigate()
@@ -86,8 +121,9 @@ namespace Shipdoku.ViewModels
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            CreateEmpty = (bool)(navigationContext.Parameters["createEmpty"]);
-            if (!CreateEmpty)
+            IsCreateEmpty = (bool)(navigationContext.Parameters["createEmpty"]);
+            CanShowSolution = !IsCreateEmpty;
+            if (!IsCreateEmpty)
             {
                 GenerateNewField();
             }
