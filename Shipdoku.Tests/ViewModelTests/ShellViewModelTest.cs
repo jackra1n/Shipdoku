@@ -12,8 +12,7 @@ namespace Shipdoku.Tests.ViewModelTests
 
         public ShellViewModelTest()
         {
-            var regionManagerMock = new Mock<IRegionManager>();
-            _testee = new ShellViewModel(regionManagerMock.Object);
+            _testee = new ShellViewModel();
         }
 
         [Fact]

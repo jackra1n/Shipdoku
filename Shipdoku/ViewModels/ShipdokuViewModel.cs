@@ -89,12 +89,12 @@ namespace Shipdoku.ViewModels
 
         #endregion
 
-        public void SetCurrentFieldType(string fieldType)
+        private void SetCurrentFieldType(string fieldType)
         {
             CurrentFieldType = Enum.Parse<EShipdokuField>(fieldType);
         }
 
-        public void SetField(string commandParameter)
+        private void SetField(string commandParameter)
         {
             var array = commandParameter.Split(',').Select(int.Parse).ToArray();
             PlayingField[array[0], array[1]] = _currentFieldType;
@@ -123,6 +123,7 @@ namespace Shipdoku.ViewModels
         {
             IsCreateEmpty = (bool)(navigationContext.Parameters["createEmpty"]);
             CanShowSolution = !IsCreateEmpty;
+            ShowSolution = false;
             if (!IsCreateEmpty)
             {
                 GenerateNewField();

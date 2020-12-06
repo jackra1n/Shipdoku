@@ -9,10 +9,9 @@ namespace Shipdoku.ViewModels
 {
     public class StartMenuViewModel : BindableBase
     {
-        public string Title { get; } = "Shipdoku";
         private readonly IRegionManager _regionManager;
 
-        public DelegateCommand<string> NavigateCommand { get; private set; }
+        public DelegateCommand<string> NavigateCommand { get;  }
 
         public StartMenuViewModel(IRegionManager regionManager)
         {
@@ -26,6 +25,5 @@ namespace Shipdoku.ViewModels
             navParameters.Add("createEmpty", bool.Parse(createEmpty));
             _regionManager.RequestNavigate("ContentRegion", "Shipdoku", navParameters);
         }
-
     }
 }
