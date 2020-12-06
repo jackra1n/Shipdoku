@@ -1,4 +1,6 @@
 ﻿using System;
+using Moq;
+using Prism.Regions;
 using Shipdoku.ViewModels;
 using Xunit;
 
@@ -10,7 +12,8 @@ namespace Shipdoku.Tests.ViewModelTests
 
         public ShellViewModelTest()
         {
-            _testee = new ShellViewModel();
+            var regionManagerMock = new Mock<IRegionManager>();
+            _testee = new ShellViewModel(regionManagerMock.Object);
         }
 
         [Fact]

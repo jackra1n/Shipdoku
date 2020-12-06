@@ -7,9 +7,8 @@
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
-        Title="{Binding Title}" Height="450" Width="800"
-        Icon="../Images/shipIcon.ico">
+        Title="{Binding Title}" Height="600" Width="800">
     <Grid>
-        <local:Shipdoku></local:Shipdoku>
+        <ContentControl prism:RegionManager.RegionName="ContentRegion"/>
     </Grid>
 </Window>

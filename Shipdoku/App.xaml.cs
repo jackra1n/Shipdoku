@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using Prism.Ioc;
+using Prism.Modularity;
 using Prism.Unity;
 using Shipdoku.Interfaces;
 using Shipdoku.Services;
@@ -18,16 +19,20 @@ namespace Shipdoku
     /// </summary>
     public partial class App : PrismApplication
     {
+        protected override Window CreateShell()
+        {
+            return Container.Resolve<Shell>();
+        }
+
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.Register<IShipdokuGenerator, ShipdokuGenerator>();
             containerRegistry.Register<IExportService, ExportService>();
         }
 
-        protected override Window CreateShell()
+        protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
         {
-            var w = Container.Resolve<Shell>();
-            return w;
+            moduleCatalog.AddModule<Shipdoku.Modules.NavigationModule>();
         }
-    }
-}
+    } 
+} 

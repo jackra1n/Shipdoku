@@ -1,0 +1,16 @@
+﻿<UserControl x:Class="Shipdoku.Views.StartMenu"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Shipdoku.Views"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d" 
+             Height="600" Width="800">
+    <Grid>
+        <Label Content="{Binding Title}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0, 60" FontSize="44"/>
+        <Button Content="Rätsel generieren" Command="{Binding NavigateCommand}" CommandParameter="false" VerticalAlignment="Center" Margin="0,-160,0,0" Height="40" Width="200" FontSize="24"/>
+        <Button Content="Eigenes Rätsel erstellen" Command="{Binding NavigateCommand}" CommandParameter="true" Height="40" Width="260" VerticalAlignment="Center" Margin="0,40,0,0" FontSize="24"/>
+    </Grid>
+</UserControl>

@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <None Remove="Images\check.png" />
+    <None Remove="Images\delete.png" />
     <None Remove="Images\export.png" />
     <None Remove="Images\redo.png" />
     <None Remove="Images\shipDown.png" />
@@ -22,12 +23,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="CommonServiceLocator" Version="2.0.5" />
     <PackageReference Include="Prism.Unity" Version="8.0.0.1850-pre" />
     <PackageReference Include="Prism.Wpf" Version="8.0.0.1850-pre" />
     <PackageReference Include="System.Drawing.Common" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Images\delete.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\check.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
