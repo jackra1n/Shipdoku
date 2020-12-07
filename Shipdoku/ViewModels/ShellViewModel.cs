@@ -15,13 +15,5 @@ namespace Shipdoku.ViewModels
             get { return _title; }
             set { SetProperty(ref _title, value); }
         }
-
-
-        public ShellViewModel(IRegionManager regionManager)
-        {
-            _regionManager = regionManager;
-        }
-
-        
     }
 }
