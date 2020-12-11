@@ -13,6 +13,7 @@
              Height="600" Width="800" d:DataContext="{d:DesignInstance viewModels:ShipdokuViewModel}">
     <UserControl.Resources>
         <converters:ShipdokuFieldToImageConverter x:Key="ShipdokuFieldToImageConverter"/>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
     </UserControl.Resources>
     <DockPanel>
         <StackPanel Width="180" HorizontalAlignment="Left">
@@ -55,7 +56,7 @@
             </StackPanel>
             <StackPanel Height="270">
                 <Image Height="50" Width="50" HorizontalAlignment="Stretch" Source="{Binding Path=CurrentFieldType, Converter={StaticResource ShipdokuFieldToImageConverter}}"/>
-                <Grid Margin="10">
+                <Grid Margin="10" Visibility="{Binding CanShowSolution, Converter={StaticResource BoolToVis}}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition />
@@ -88,7 +89,7 @@
                     <Image Grid.Row="3" Grid.Column="0" Source="../Images/shipSingle.png"/>
                     <Label Grid.Row="3" Grid.Column="4" FontSize="20" HorizontalContentAlignment="Center">4x</Label>
 
-                    <CheckBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Margin="10" IsChecked="{Binding ShowSolution}" 
+                    <CheckBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5" Margin="10" IsChecked="{Binding ShowSolution}" 
                               IsEnabled="{Binding CanShowSolution}">Lösung anzeigen</CheckBox>
                 </Grid>
             </StackPanel>
