@@ -53,7 +53,6 @@ namespace Shipdoku.Services
 
             playingfield.VerticalCounts = GetShipCountsForColumns(shipdokuField);
 
-            // ToDo: Checken, dass Solved und nicht Solved nicht die gleiche Referenz haben
             playingfield.SolvedShipdokuField = shipdokuField;
 
             playingfield.ShipdokuField = DissolveField(shipdokuField);
