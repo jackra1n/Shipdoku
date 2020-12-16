@@ -6,6 +6,7 @@ using System.Linq;
 
 namespace Shipdoku.Services
 {
+    ///<inheritdoc cref="IShipdokuGenerator"/>
     public class ShipdokuGenerator : IShipdokuGenerator
     {
         private const int PlayingFieldHeight = 8;

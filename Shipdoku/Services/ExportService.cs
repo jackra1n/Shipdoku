@@ -10,6 +10,7 @@ using FontStyle = System.Drawing.FontStyle;
 
 namespace Shipdoku.Services
 {
+    ///<inheritdoc cref="IExportService"/>
     class ExportService : IExportService
     {
         private readonly int pixelMarginImage = 30;
