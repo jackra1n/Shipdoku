@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Shipdoku.Converters;
+﻿using Shipdoku.Converters;
 using Shipdoku.Enums;
+using System;
+using System.Globalization;
 using Xunit;
 
 namespace Shipdoku.Tests.ConverterTests
 {
     public class ShipdokuFieldToImageConverterTests
     {
-        private ShipdokuFieldToImageConverter _testee;
+        private readonly ShipdokuFieldToImageConverter _testee;
 
         public ShipdokuFieldToImageConverterTests()
         {

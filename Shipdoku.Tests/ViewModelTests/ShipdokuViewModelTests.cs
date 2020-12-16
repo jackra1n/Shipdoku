@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using Shipdoku.ViewModels;
-using System.Text;
-using Moq;
+﻿using Moq;
 using Prism.Regions;
 using Shipdoku.Enums;
 using Shipdoku.Interfaces;
 using Shipdoku.Models;
+using Shipdoku.ViewModels;
+using System;
 using Xunit;
 
 namespace Shipdoku.Tests.ViewModelTests

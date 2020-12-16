@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Shipdoku.Models;
+﻿using Shipdoku.Models;
 
 namespace Shipdoku.Interfaces
 {

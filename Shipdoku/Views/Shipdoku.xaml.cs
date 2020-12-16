@@ -1,18 +1,9 @@
 ﻿using Shipdoku.Converters;
-using Shipdoku.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Shipdoku.Views
 {
@@ -90,7 +81,7 @@ namespace Shipdoku.Views
                         else if (row != 8)
                             countBinding = new Binding($"ShipdokuModel.VerticalCounts[{row}]");
 
-                        shipCountTextBox.SetBinding(TextBox.TextProperty, countBinding);
+                        shipCountTextBox.SetBinding(TextBox.TextProperty, countBinding!);
                         gameFieldStackPanel.Children.Add(shipCountTextBox);
                     }
                 }

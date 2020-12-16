@@ -1,16 +1,11 @@
-﻿using Shipdoku.Enums;
-using Shipdoku.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
-using System.IO;
-using Microsoft.Win32;
-using System.Drawing.Imaging;
+﻿using Microsoft.Win32;
 using Shipdoku.Converters;
-using System.Reflection;
-using System.Windows;
+using Shipdoku.Enums;
+using Shipdoku.Interfaces;
 using Shipdoku.Models;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using FontStyle = System.Drawing.FontStyle;
 
 namespace Shipdoku.Services
@@ -76,7 +71,6 @@ namespace Shipdoku.Services
         /// <returns>The created Image</returns>
         private Image CreateBitmapImageFromPlayingField(EShipdokuField[,] shipdokuField, int[] verticalCounts, int[] horizontalCounts)
         {
-            // ToDo: evtl. Refactor
             int horizonzalFields = shipdokuField.GetLength(0);
             int verticalFields = shipdokuField.GetLength(1);
 
@@ -86,29 +80,31 @@ namespace Shipdoku.Services
             int horizontalPixelSum = baseFieldPixelWidth + 2 * pixelMarginImage + pixelMarginBetweenFields + pixelPerField;
             int verticalPixelSum = baseFieldPixelHeight + 2 * pixelMarginImage + 3 * pixelMarginBetweenFields + 3 * pixelPerField;
 
-            var image = new Bitmap(horizontalPixelSum, verticalPixelSum);
-
-            using Graphics graphics = Graphics.FromImage(image);
-
-            graphics.Clear(Color.White);
-
-            Rectangle baseRectangle = new Rectangle(pixelMarginImage, pixelMarginImage, baseFieldPixelWidth, baseFieldPixelHeight);
-
-            graphics.FillRectangle(_blackBrush, baseRectangle);
-
             int marginTop = pixelMarginImage + pixelMarginBetweenFields;
 
+            // Create an Empty White Canvas
+            var image = new Bitmap(horizontalPixelSum, verticalPixelSum);
+            using Graphics graphics = Graphics.FromImage(image);
+            graphics.Clear(Color.White);
+
+            // Draw base for Playingfield
+            Rectangle baseRectangle = new Rectangle(pixelMarginImage, pixelMarginImage, baseFieldPixelWidth, baseFieldPixelHeight);
+            graphics.FillRectangle(_blackBrush, baseRectangle);
+
+
+            // Draw each Row
             for (int row = 0; row < shipdokuField.GetLength(1); row++)
             {
                 int marginLeft = pixelMarginImage + pixelMarginBetweenFields;
 
-
+                // Draw each Column
                 for (int column = 0; column < shipdokuField.GetLength(0); column++)
                 {
+                    // Create white Rectangle as Base for Field
                     Rectangle fieldRectangle = new Rectangle(marginLeft, marginTop, pixelPerField, pixelPerField);
-
                     graphics.FillRectangle(_whiteBrush, fieldRectangle);
 
+                    // Draw the Field-Image if a Field is Set
                     string path = (string)_converter.Convert(shipdokuField[row, column], null, null, null);
                     if (shipdokuField[row, column] != EShipdokuField.Empty && !string.IsNullOrEmpty(path))
                     {
@@ -120,8 +116,8 @@ namespace Shipdoku.Services
                     marginLeft += pixelMarginBetweenFields + pixelPerField;
                 }
 
+                // Draw Ship-Count after each Row
                 Rectangle numberRectangle = new Rectangle(marginLeft, marginTop, pixelPerField, pixelPerField);
-
                 graphics.DrawString(verticalCounts[row].ToString(), _blackFont, _blackBrush, numberRectangle);
 
                 marginTop += pixelMarginBetweenFields + pixelPerField;
@@ -129,10 +125,10 @@ namespace Shipdoku.Services
 
             int marginCountLeft = pixelMarginImage + pixelMarginBetweenFields;
 
+            // Draw vertical Ship counts
             for (int column = 0; column < shipdokuField.GetLength(0); column++)
             {
                 Rectangle numberRectangle = new Rectangle(marginCountLeft, baseFieldPixelHeight + pixelMarginImage, pixelPerField, pixelPerField);
-
                 graphics.DrawString(horizontalCounts[column].ToString(), _blackFont, _blackBrush, numberRectangle);
 
                 marginCountLeft += pixelMarginBetweenFields + pixelPerField;

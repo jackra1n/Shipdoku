@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Regions;
 using Shipdoku.Enums;
 using Shipdoku.Interfaces;
 using Shipdoku.Models;
-using Prism.Commands;
-using Prism.Common;
-using System.Windows;
-using System.Linq;
-using Prism.Regions;
 
 namespace Shipdoku.ViewModels
 {
@@ -21,7 +17,7 @@ namespace Shipdoku.ViewModels
         private ShipdokuModel _shipdokuModel;
         private EShipdokuField _currentFieldType;
         private bool _isCreateEmpty;
-        private bool _showSolution = false;
+        private bool _showSolution;
         private bool _canShowSolution;
 
         public ShipdokuViewModel(IShipdokuGenerator shipdokuGenerator, IExportService exportService, IRegionManager regionManager)
@@ -130,14 +126,7 @@ namespace Shipdoku.ViewModels
             }
         }
 
-        public bool IsNavigationTarget(NavigationContext navigationContext)
-        {
-            return true;
-        }
-
-        public void OnNavigatedFrom(NavigationContext navigationContext)
-        {
-            return;
-        }
+        public bool IsNavigationTarget(NavigationContext navigationContext) => true;
+        public void OnNavigatedFrom(NavigationContext navigationContext) { }
     }
 }

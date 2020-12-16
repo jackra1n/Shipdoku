@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Controls;
-using Shipdoku.Enums;
+﻿using Shipdoku.Enums;
 using Shipdoku.Interfaces;
 using Shipdoku.Models;
+using System;
+using System.Linq;
 
 namespace Shipdoku.Services
 {
@@ -60,6 +57,11 @@ namespace Shipdoku.Services
             return playingfield;
         }
 
+        /// <summary>
+        /// Dissolves the given Playingfield
+        /// </summary>
+        /// <param name="shipdokuField">ShipdokuField to dissolve</param>
+        /// <returns>Dissolved Field</returns>
         private EShipdokuField[,] DissolveField(EShipdokuField[,] shipdokuField)
         {
             EShipdokuField[,] dissolvedField = new EShipdokuField[PlayingFieldHeight,PlayingFieldWidht];
@@ -75,6 +77,11 @@ namespace Shipdoku.Services
             return dissolvedField;
         }
 
+        /// <summary>
+        /// Gets the horizontal Ship-counts as an Array
+        /// </summary>
+        /// <param name="field">Generated Playingfield</param>
+        /// <returns>Horizontal Shipcounts as Array</returns>
         private static int[] GetShipCountsForRows(EShipdokuField[,] field)
         {
             int[] counts = new int[PlayingFieldHeight];
@@ -95,6 +102,11 @@ namespace Shipdoku.Services
             return counts;
         }
 
+        /// <summary>
+        /// Gets the vertical Ship-counts as an Array
+        /// </summary>
+        /// <param name="field">Generated Playingfield</param>
+        /// <returns>Vertical Shipcounts as Array</returns>
         private static int[] GetShipCountsForColumns(EShipdokuField[,] field)
         {
             int[] counts = new int[PlayingFieldWidht];
@@ -115,6 +127,14 @@ namespace Shipdoku.Services
             return counts;
         }
 
+        /// <summary>
+        /// Places a Ship on the Playinfield
+        /// </summary>
+        /// <param name="field">Playingfield</param>
+        /// <param name="xCoordinate">Start X-Coordinate of Ship</param>
+        /// <param name="yCoordinate">Start Y-Coordinate of Ship</param>
+        /// <param name="length">Length of ship</param>
+        /// <param name="direction">Direction of ship</param>
         private static void FillInShip(EShipdokuField[,] field, int xCoordinate, int yCoordinate, int length, EShipStartDirection direction)
         {
             for (int i = 0; i < length; i++)
@@ -141,60 +161,74 @@ namespace Shipdoku.Services
             }
         }
 
+        /// <summary>
+        /// Retuns the right Shipf-Part for the Ship Index
+        /// </summary>
+        /// <param name="index">Field Index</param>
+        /// <param name="length">Lengt of ship</param>
+        /// <param name="direction">Direction of Ship</param>
+        /// <returns></returns>
         private static EShipdokuField GetShipPart(int index, int length, EShipStartDirection direction)
         {
             if (length == 1)
             {
                 return EShipdokuField.ShipSingle;
             }
-            else if (index == 1)
+            if (index == 1)
             {
                 return GetShipFieldFromDirection(direction);
             }
-            else if (index == length)
+            if (index == length)
             {
                 return GetShipFieldFromDirection(InvertDirection(direction));
             }
-            else
-            {
-                return EShipdokuField.ShipMiddle;
-            }
+            
+            return EShipdokuField.ShipMiddle;
         }
 
+        /// <summary>
+        /// Inverts the direction of the Ship-Startposition
+        /// </summary>
+        /// <param name="direction">Original direction</param>
+        /// <returns>Inverter direction</returns>
         private static EShipStartDirection InvertDirection(EShipStartDirection direction)
         {
-            switch (direction)
+            return direction switch
             {
-                case EShipStartDirection.Up:
-                    return EShipStartDirection.Down;
-                case EShipStartDirection.Down:
-                    return EShipStartDirection.Up;
-                case EShipStartDirection.Left:
-                    return EShipStartDirection.Right;
-                case EShipStartDirection.Right:
-                    return EShipStartDirection.Left;
-                default:
-                    throw new NotSupportedException();
-            }
+                EShipStartDirection.Up => EShipStartDirection.Down,
+                EShipStartDirection.Down => EShipStartDirection.Up,
+                EShipStartDirection.Left => EShipStartDirection.Right,
+                EShipStartDirection.Right => EShipStartDirection.Left,
+                _ => throw new NotSupportedException()
+            };
         }
 
+        /// <summary>
+        /// Returns a Ship-Part for the given Direction
+        /// </summary>
+        /// <param name="direction">Direction of ship</param>
+        /// <returns>Ship Part</returns>
         private static EShipdokuField GetShipFieldFromDirection(EShipStartDirection direction)
         {
-            switch (direction)
+            return direction switch
             {
-                case EShipStartDirection.Up:
-                    return EShipdokuField.ShipDown;
-                case EShipStartDirection.Down:
-                    return EShipdokuField.ShipUp;
-                case EShipStartDirection.Left:
-                    return EShipdokuField.ShipRight;
-                case EShipStartDirection.Right:
-                    return EShipdokuField.ShipLeft;
-                default:
-                    throw new NotSupportedException();
-            }
+                EShipStartDirection.Up => EShipdokuField.ShipDown,
+                EShipStartDirection.Down => EShipdokuField.ShipUp,
+                EShipStartDirection.Left => EShipdokuField.ShipRight,
+                EShipStartDirection.Right => EShipdokuField.ShipLeft,
+                _ => throw new NotSupportedException()
+            };
         }
 
+        /// <summary>
+        /// Checks, if a ship can be placed in the given Position
+        /// </summary>
+        /// <param name="field">Playingfield</param>
+        /// <param name="xCoordinate">Start X-Coordinate of Ship</param>
+        /// <param name="yCoordinate">Start Y-Coordinate of Ship</param>
+        /// <param name="length">Length of Ship</param>
+        /// <param name="direction">Direction of Ship</param>
+        /// <returns>True if Position is Valid</returns>
         private static bool CheckSurroundingsOfShip(EShipdokuField[,] field, int xCoordinate, int yCoordinate, int length, EShipStartDirection direction)
         {
             for (int i = 0; i < length; i++)
@@ -224,12 +258,19 @@ namespace Shipdoku.Services
 
             return true;
         }
-        
+
+        /// <summary>
+        /// Checks, if the surroundings of a given Field are already Taken by an other Ship
+        /// </summary>
+        /// <param name="field">Playingfield</param>
+        /// <param name="yCoordinate">Start X-Coordinate of Ship</param>
+        /// <param name="xCoordinate">Start Y-Coordinate of Ship</param>
+        /// <returns>True if there are no surrounding Ships</returns>
         private static bool CheckSurroundingsOfField(EShipdokuField[,] field, int yCoordinate, int xCoordinate)
         { 
-            if (yCoordinate > 7 || yCoordinate < 0
-                || xCoordinate > 7 || xCoordinate < 0
-                || field[yCoordinate, xCoordinate] != EShipdokuField.Water // Feld checken
+            if (yCoordinate > PlayingFieldWidht - 1 || yCoordinate < 0
+                || xCoordinate > PlayingFieldHeight - 1 || xCoordinate < 0
+                || field[yCoordinate, xCoordinate] != EShipdokuField.Water
                 || !CheckForDiagonalShips(field, yCoordinate, xCoordinate)
                 || (yCoordinate != 0 && field[yCoordinate - 1, xCoordinate] != EShipdokuField.Water)
                 || (yCoordinate != PlayingFieldWidht - 1 && field[yCoordinate + 1, xCoordinate] != EShipdokuField.Water)
@@ -242,6 +283,13 @@ namespace Shipdoku.Services
             return true;
         }
 
+        /// <summary>
+        /// Checks if there are any ships diagonaly to the given Coordinate
+        /// </summary>
+        /// <param name="solvedShipdokuField">Playingfield</param>
+        /// <param name="yCoordinate">Start Y-Coordinate of Ship</param>
+        /// <param name="xCoordinate">Start X-Coordinate of Ship</param>
+        /// <returns></returns>
         private static bool CheckForDiagonalShips(EShipdokuField[,] solvedShipdokuField, int yCoordinate, int xCoordinate)
         {
             if (yCoordinate != 0 && xCoordinate != 0 &&
@@ -263,6 +311,10 @@ namespace Shipdoku.Services
             return true;
         }
 
+        /// <summary>
+        /// Replaces all empty fields of the playingfield with water
+        /// </summary>
+        /// <param name="field">Playingfield</param>
         private static void ReplaceEmptyFieldsWithWater(EShipdokuField[,] field)
         {
             for (int i = 0; i < PlayingFieldWidht; i++)

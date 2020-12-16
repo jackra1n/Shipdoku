@@ -1,16 +1,13 @@
-﻿using Prism.Commands;
-using Prism.Ioc;
+﻿using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
 using Shipdoku.Views;
-using System;
-using Unity;
 
 namespace Shipdoku.Modules
 {
     public class NavigationModule : IModule
     {
-        IRegionManager _regionManager;
+        private readonly IRegionManager _regionManager;
 
         public NavigationModule(IRegionManager regionManager)
         {

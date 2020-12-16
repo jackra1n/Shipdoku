@@ -1,7 +1,4 @@
-﻿using System;
-using Moq;
-using Prism.Regions;
-using Shipdoku.ViewModels;
+﻿using Shipdoku.ViewModels;
 using Xunit;
 
 namespace Shipdoku.Tests.ViewModelTests

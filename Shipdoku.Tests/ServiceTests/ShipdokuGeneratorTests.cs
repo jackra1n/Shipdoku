@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media;
-using Shipdoku.Enums;
+﻿using Shipdoku.Enums;
 using Shipdoku.Services;
+using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
-using Xunit.Sdk;
 
 namespace Shipdoku.Tests.ServiceTests
 {
@@ -150,7 +143,7 @@ namespace Shipdoku.Tests.ServiceTests
                 return true;
             }
 
-             return false;
+            return false;
         }
 
         private bool CheckForDiagonalShips(EShipdokuField[,] solvedShipdokuField, int column, int row)

@@ -1,9 +1,6 @@
 ﻿using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Shipdoku.ViewModels
 {
@@ -12,6 +9,7 @@ namespace Shipdoku.ViewModels
         private readonly IRegionManager _regionManager;
 
         public DelegateCommand<string> NavigateCommand { get;  }
+        public string Title { get; set; } = "Shipdoku";
 
         public StartMenuViewModel(IRegionManager regionManager)
         {
@@ -21,8 +19,7 @@ namespace Shipdoku.ViewModels
 
         private void Navigate(string createEmpty)
         {
-            var navParameters = new NavigationParameters();
-            navParameters.Add("createEmpty", bool.Parse(createEmpty));
+            var navParameters = new NavigationParameters {{"createEmpty", bool.Parse(createEmpty)}};
             _regionManager.RequestNavigate("ContentRegion", "Shipdoku", navParameters);
         }
     }
